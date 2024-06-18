@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://5dm6iw1mhflo"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_tkgfq"]
+[ext_resource type="Texture2D" uid="uid://b3jmybilmrbk0" path="res://assets/Textures/Enemy/giant_amoeba_new.png" id="2_xgj8s"]
+[ext_resource type="PackedScene" uid="uid://o54hrb4qj1hc" path="res://scenes/hurt_box.tscn" id="3_ybpuv"]
+[ext_resource type="PackedScene" uid="uid://bg30qsrcdgpbt" path="res://scenes/hit_box.tscn" id="4_8qbn1"]
+[ext_resource type="AudioStream" uid="uid://dsna6aw041kib" path="res://assets/Audio/SoundEffect/enemy_hit.ogg" id="5_nrnx0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mf4al"]
+atlas = ExtResource("2_xgj8s")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v0o3x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mf4al")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uhf3p"]
+radius = 11.0
+height = 22.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5noi"]
+size = Vector2(32, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo4mr"]
+size = Vector2(28, 25)
+
+[node name="enemy_super" type="CharacterBody2D"]
+scale = Vector2(5, 5)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_tkgfq")
+movement_speed = 150
+hp = 99999.0
+knockback_recovery = 99999.0
+experience = 100
+enemy_damage = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v0o3x")
+autoplay = "default"
+frame_progress = 0.399759
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+scale = Vector2(5, 5)
+shape = SubResource("CapsuleShape2D_uhf3p")
+disabled = true
+
+[node name="HurtBox" parent="." instance=ExtResource("3_ybpuv")]
+collision_layer = 4
+collision_mask = 4
+HurtBoxType = 1
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_e5noi")
+
+[node name="HitBox" parent="." instance=ExtResource("4_8qbn1")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_bo4mr")
+
+[node name="snd_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_nrnx0")
+volume_db = -20.0
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]

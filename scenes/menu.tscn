@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhgkroca76j38"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_hdfcl"]
+[ext_resource type="FontFile" uid="uid://cc3gf1gi6ym0a" path="res://assets/Font/tenderness.otf" id="1_qudch"]
+[ext_resource type="PackedScene" uid="uid://c5btwiuhvsdot" path="res://scenes/basic_button.tscn" id="2_2010e"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hdfcl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.392855, 0.324508, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -152.0
+offset_top = 47.0
+offset_right = 152.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_qudch")
+theme_override_font_sizes/font_size = 48
+text = "Survival Clone"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_play" parent="." instance=ExtResource("2_2010e")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -48.5
+offset_right = 105.0
+offset_bottom = 48.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "PLAY"
+
+[node name="btn_quit" parent="." instance=ExtResource("2_2010e")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -121.0
+offset_right = 105.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 48
+text = "QUIT"
+
+[connection signal="click_end" from="btn_play" to="." method="_on_btn_play_click_end"]
+[connection signal="click_end" from="btn_quit" to="." method="_on_btn_quit_click_end"]

@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://dl7fj5ir8d88a"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_twu52"]
+[ext_resource type="Texture2D" uid="uid://dcnojheiswg16" path="res://assets/Textures/Enemy/juggernaut.png" id="2_2sngv"]
+[ext_resource type="PackedScene" uid="uid://o54hrb4qj1hc" path="res://scenes/hurt_box.tscn" id="3_vcg2t"]
+[ext_resource type="PackedScene" uid="uid://bg30qsrcdgpbt" path="res://scenes/hit_box.tscn" id="4_ktiy5"]
+[ext_resource type="AudioStream" uid="uid://dsna6aw041kib" path="res://assets/Audio/SoundEffect/enemy_hit.ogg" id="5_n2dwj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2q5f"]
+atlas = ExtResource("2_2sngv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wm4c"]
+atlas = ExtResource("2_2sngv")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v0o3x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2q5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wm4c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uhf3p"]
+radius = 12.0
+height = 28.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5noi"]
+size = Vector2(35, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo4mr"]
+size = Vector2(35, 35)
+
+[node name="enemy_juggernaut" type="CharacterBody2D"]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_twu52")
+movement_speed = 40
+hp = 300.0
+knockback_recovery = 20.0
+experience = 100
+enemy_damage = 8
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v0o3x")
+autoplay = "default"
+frame_progress = 0.399759
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1, -1)
+shape = SubResource("CapsuleShape2D_uhf3p")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_vcg2t")]
+collision_layer = 4
+collision_mask = 4
+HurtBoxType = 1
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+visible = false
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_e5noi")
+
+[node name="HitBox" parent="." instance=ExtResource("4_ktiy5")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+visible = false
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_bo4mr")
+
+[node name="snd_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_n2dwj")
+volume_db = -20.0
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]

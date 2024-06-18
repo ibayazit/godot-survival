@@ -1,0 +1,139 @@
+[gd_scene load_steps=21 format=3 uid="uid://bs8xqcthhimk5"]
+
+[ext_resource type="Texture2D" uid="uid://bqix60u1nx3gn" path="res://assets/Textures/Enemy/explosion_pixelfied.png" id="1_2yojc"]
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="2_d2edp"]
+[ext_resource type="AudioStream" uid="uid://rfanc8s4e62e" path="res://assets/Audio/SoundEffect/enemy_death.ogg" id="3_p2bt0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bwfw"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf1w4"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojniq"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdgf4"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3s6c"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkosy"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nais"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h61m"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf3yc"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgbxj"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mq3p"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh3tm"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww54l"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyt24"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb8pv"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xthu"]
+atlas = ExtResource("1_2yojc")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfgyl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bwfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf1w4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojniq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdgf4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3s6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkosy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nais")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h61m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf3yc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgbxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mq3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yh3tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww54l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyt24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb8pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xthu")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_qfgyl")
+frame = 15
+frame_progress = 1.0
+script = ExtResource("2_d2edp")
+
+[node name="snd_explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_p2bt0")
+pitch_scale = 0.5
+autoplay = true
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
